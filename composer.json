@@ -1,0 +1,24 @@
+{
+  "name": "uuf6429/live-sql-parser",
+  "description": "Live SQL Parser",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Christian Sciberras",
+      "email": "christian@sciberras.me"
+    }
+  ],
+  "require": {
+    "phpmyadmin/sql-parser": "^3.4",
+    "fxp/composer-asset-plugin": "^1.2.2",
+    "npm-asset/superagent": "^3.1",
+    "bower-asset/codemirror": "^5.21"
+  },
+  "extra": {
+    "asset-installer-paths": {
+      "npm-asset-library": "web/vendor",
+      "bower-asset-library": "web/vendor"
+    }
+  }
+}
