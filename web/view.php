@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="assets/nice_r.css"/>
     <script src="assets/nice_r.js"></script>
     <link rel="stylesheet" href="vendor/codemirror/lib/codemirror.css"/>
-    <script src="vendor/superagent/superagent.js"></script>
     <script src="vendor/codemirror/lib/codemirror.js"></script>
     <script src="vendor/codemirror/mode/sql/sql.js"></script>
     <script src="vendor/codemirror/addon/runmode/runmode.js"></script>
@@ -93,14 +92,17 @@
         });
 
         editor.on("changes", function(cm){
-            superagent
-                .post("/?nc=" + Date.now())
-                .type("application/x-www-form-urlencoded")
-                .send({parse: true, code: cm.getValue()})
-                .end(function(err, res){
-                    console.log(this, arguments);
-                    highlight(res.body);
-                });
+            var f = new FormData();
+            f.set('parse', '1');
+            f.set('code', cm.getValue());
+            
+            var r = new XMLHttpRequest();
+            r.open("POST", "/", true);
+            r.onreadystatechange = function () {
+                if (r.readyState != 4 || r.status != 200) return;
+                highlight(JSON.parse(r.responseText));
+            };
+            r.send(f);
         });
 
         document.getElementById("left").onclick = function(){ editor.focus(); };
